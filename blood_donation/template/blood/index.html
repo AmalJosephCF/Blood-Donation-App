@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <style>
+        .xyz{
+          margin-bottom: 0px;
+          background-image: url('{% static "image/homepage.jpg" %}');
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+
+        .section.about {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+
+        .about-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-banner {
+            width: 470px;
+            margin-right: 20px; /* Adjust margin between image and content */
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e64c4c;
+        }
+      </style>
+      
+</head>
+
+
+<body>
+  {% include "blood/navbar.html" %}
+<br>
+<section id="section-jumbotron" style="margin-bottom: 0px;" class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center xyz">
+    <div class="container text-center">
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+     
+      
+      <br><br><br><br>
+      
+    </div>  
+  </section>
+
+
+  <div class="jumbotron" style="margin-top: 0px;margin-bottom: 0px;">
+
+   <center>
+  <h1><b>Welcome To Blood Line</b></h1>
+</center>
+     </div>
+   <section class="section about" id="about" aria-label="about">
+        <div class="container">
+            <div class="about-wrapper">
+                <figure class="about-banner">
+                    <img src="{% static 'image/about-banner.png' %}" width="470" height="538" loading="lazy" alt="about banner" class="w-100" />
+                </figure>
+                <div class="about-content">
+                    <p class="section-subtitle">About Us</p>
+                    <h2 class="h2 section-title">
+                        We Care For Your Loved Ones
+                    </h2>
+                    <p class="section-text section-text-1">
+                        At Blood Bridge, we are passionate about
+                        connecting blood donors with recipients and
+                        bridging the gap in the healthcare industry. Our
+                        mission is to provide a seamless and efficient
+                        experience for both donors and recipients,
+                        ensuring timely access to life-saving blood
+                        transfusions.
+                    </p>
+                    <p class="section-text">
+                        We strive to create a community that fosters
+                        empathy, support, and solidarity among
+                        individuals who are committed to making a
+                        difference. Whether you're a potential donor or
+                        someone in need of blood, we are here to assist
+                        you every step of the way.
+                    </p>
+<!--                    <a href="#" class="btn">Read more About Us</a>-->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+  {% include "blood/footer.html" %}
+
+
+</body>
+
+</html>

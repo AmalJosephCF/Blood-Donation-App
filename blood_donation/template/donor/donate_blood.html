@@ -1,0 +1,131 @@
+{% extends 'donor/donorbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+<head>
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <!-- Main CSS-->
+    <link href="{% static "css/main.css" %}" rel="stylesheet" media="all">
+</head>
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="wrapper wrapper--w790">
+
+        <div style="margin-left: 70px;" class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">DONATE BLOOD</h2>
+            </div>
+            <div class="card-body">
+                <form id="donateBloodForm" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="name">Blood Group</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select name="bloodgroup" class="form-control">
+                                        <option disabled="disabled" selected="selected">Please Select</option>
+                                        <option>O+</option>
+                                        <option>O-</option>
+                                        <option>A+</option>
+                                        <option>A-</option>
+                                        <option>B+</option>
+                                        <option>B-</option>
+                                        <option>AB+</option>
+                                        <option>AB-</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="name">Unit (ml)</div>
+                        <div class="value">
+                            <div class="input-group">
+                                {% render_field donation_form.unit|attr:'required:true'  class="input--style-5"  %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="name">Disease (if any)</div>
+                        <div class="value">
+                            <div class="input-group">
+                                {% render_field donation_form.disease|attr:'required:true'  class="input--style-5"  %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="name">Age</div>
+                        <div class="value">
+                            <div class="input-group">
+                                {% render_field donation_form.age|attr:'required:true'  class="input--style-5"  %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button id="donateButton" class="btn btn--radius-2 btn-success" type="submit">DONATE</button>
+                    </div>
+                </form>
+                <br>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup HTML -->
+<div id="popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p>You can donate blood again only after 6 months.</p>
+<!--        <p>Last Donation Date: {{ last_donation_date }}</p>-->
+    </div>
+</div>
+
+<script>
+    // Function to show popup
+    function showPopup(html) {
+        document.body.innerHTML += html;
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    // Function to close popup
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    // Ajax request to donate blood
+    document.getElementById('donateBloodForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        var form = this;
+        var formData = new FormData(form); // Create FormData object to send form data
+
+        // Make AJAX request
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.popup_html) {
+                        showPopup(response.popup_html);
+                    } else {
+                        window.location.href = response.redirect_url; // Redirect to donation history page
+                    }
+                } else {
+                    console.error('Error:', xhr.statusText);
+                }
+            }
+        };
+        xhr.send(formData); // Send form data
+    });
+</script>
+
+{% endblock content %}
